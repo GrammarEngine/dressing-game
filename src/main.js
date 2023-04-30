@@ -21,6 +21,7 @@ let content = [];
 
 let buttons = ["exit", "next_hat", "prev_hat", "next_upper", "prev_upper", "next_lower", "prev_lower", "next_shoe", "prev_shoe"];
 
+let divs = ["hats", "uppers", "lowers", "shoes"];
 
 function fetchData(character) {
   fetch(`../assets/hats/${character}/hats.json`)
@@ -103,6 +104,9 @@ function loadItem(item) {
     case "upper": {
       data = upperdata;
       num = upper;
+      let lowersdiv = document.getElementById("lowers");
+      if (data[num].conflict === true) lowersdiv.style.display = "none";
+      else lowersdiv.style.display = "block";
       break;
     }
     case "lower": {
@@ -144,19 +148,32 @@ function setHover() {
   })
 }
 
+function setDisplay() {
+  divs.forEach((div) => {
+    let obj = document.getElementById(div);
+    let next = obj.getElementsByClassName("next")[0];
+    let prev = obj.getElementsByClassName("previous")[0];
+    obj.onmouseover = function () {
+      next.style.display = "block";
+      prev.style.display = "block";
+    };
+    obj.onmouseout = function () {
+      next.style.display = "none";
+      prev.style.display = "none";
+    };
+  })
+}
+
 function load() {
   document.getElementById("loading").style.display = "none";
   common.unloadAllStyleSheets();
   common.loadStyleSheet("../assets/main-style.css");
-  bgm = new Audio(`../assets/bgm.m4a`);
-  bgm.loop = true;
-  bgm.play();
+  bgm = common.playMusic(`../assets/bgm.m4a`, true);
   document.getElementsByClassName("exit")[0].style.display = "inline-block";
   document.getElementById("field").style.display = "block";
   const menu = common.getElement("exit");
   menu.onclick = function () {
     common.playSound(`../assets/select.wav`);
-    //If only upper, or only lower, or nether upper or lower was selected, then don't go out.
     if (
       (upper === 0 && lower === 0) || (upper === 0 && lower !== 0) || (upper !== 0 && lower === 0 && upperdata[upper].conflict === false)
     ) {
@@ -172,42 +189,7 @@ function load() {
     }
   };
   setHover();
-  let hatsdiv = document.getElementById("hats");
-  let uppersdiv = document.getElementById("uppers");
-  let lowersdiv = document.getElementById("lowers");
-  let shoesdiv = document.getElementById("shoes");
-  hatsdiv.onmouseover = function () {
-    next_hat.style.display = "block";
-    prev_hat.style.display = "block";
-  };
-  uppersdiv.onmouseover = function () {
-    next_upper.style.display = "block";
-    prev_upper.style.display = "block";
-  };
-  lowersdiv.onmouseover = function () {
-    next_lower.style.display = "block";
-    prev_lower.style.display = "block";
-  };
-  shoesdiv.onmouseover = function () {
-    next_shoe.style.display = "block";
-    prev_shoe.style.display = "block";
-  };
-  hatsdiv.onmouseout = function () {
-    next_hat.style.display = "none";
-    prev_hat.style.display = "none";
-  };
-  uppersdiv.onmouseout = function () {
-    next_upper.style.display = "none";
-    prev_upper.style.display = "none";
-  };
-  lowersdiv.onmouseout = function () {
-    next_lower.style.display = "none";
-    prev_lower.style.display = "none";
-  };
-  shoesdiv.onmouseout = function () {
-    next_shoe.style.display = "none";
-    prev_shoe.style.display = "none";
-  };
+  setDisplay();
   let next_hat = document.getElementById("next_hat");
   next_hat.onclick = function () {
     common.playSound(`../assets/select.wav`);
@@ -228,8 +210,6 @@ function load() {
     upper++;
     if (upper > totaluppers) upper = 0;
     loadItem("upper");
-    if (upperdata[upper].conflict === true) lowersdiv.style.display = "none";
-    else lowersdiv.style.display = "block";
   };
   let prev_upper = document.getElementById("prev_upper");
   prev_upper.onclick = function () {
@@ -237,8 +217,6 @@ function load() {
     upper--;
     if (upper < 0) upper = totaluppers;
     loadItem("upper");
-    if (upperdata[upper].conflict === true) lowersdiv.style.display = "none";
-    else lowersdiv.style.display = "block";
   };
   let next_lower = document.getElementById("next_lower");
   next_lower.onclick = function () {
