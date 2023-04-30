@@ -1,7 +1,6 @@
 import * as common from "./common-scripts.js";
 
 let bgm = undefined;
-let defaultbgm = undefined;
 
 let money = 0;
 
@@ -20,10 +19,106 @@ let upperdata = undefined;
 let lowerdata = undefined;
 let shoesdata = undefined;
 
+let content = [];
+
+function fetchData(character) {
+  fetch(`../assets/hats/${character}/hats.json`)
+    .then((response) => response.json())
+    .then((json) => {
+      console.log(json);
+      hatsdata = json;
+    });
+  fetch(`../assets/uppers/${character}/uppers.json`)
+    .then((response) => response.json())
+    .then((json) => {
+      console.log(json);
+      upperdata = json;
+    });
+  fetch(`../assets/lowers/${character}/lowers.json`)
+    .then((response) => response.json())
+    .then((json) => {
+      console.log(json);
+      lowerdata = json;
+    });
+  fetch(`../assets/shoes/${character}/shoes.json`)
+    .then((response) => response.json())
+    .then((json) => {
+      console.log(json);
+      shoesdata = json;
+    });
+}
+
+async function loadAssets() {
+  fetch("../assets/files.json")
+    .then((response) => response.json())
+    .then((json) => {
+      console.log(json);
+      json.files.forEach((file) => {
+        content.push("../assets/" + file);
+      });
+      var preload = new createjs.LoadQueue(true);
+      //This will trigger once as soon as the page is loaded.
+      let count = 0;
+      preload.loadManifest(content);
+      preload.setMaxConnections(60);
+      preload.on(
+        "fileload",
+        function () {
+          count++;
+          console.log("Files loaded: " + count);
+        },
+        this
+      );
+      preload.on("complete", load, this);
+    });
+}
+
+function loadItem(item) {
+  let character = localStorage.getItem("character");
+  let img = document.getElementById(item);
+  let num = 0;
+  let data = undefined;
+  switch (item) {
+    case "hat": {
+      data = hatsdata;
+      num = hat;
+      break;
+    }
+    case "upper": {
+      data = upperdata;
+      num = upper;
+      break;
+    }
+    case "lower": {
+      data = lowerdata;
+      num = lower;
+      break;
+    }
+    case "shoe": {
+      data = shoesdata;
+      num = shoes;
+      break;
+    }
+    default: {
+      break;
+    }
+  }
+  img.src = `../assets/${item}s/${character}/${item}_${num}.avif`;
+  //Load settings from data object.
+  img.style.top = data[num].top + "%";
+  img.style.left = data[num].left + "%";
+  img.style.right = data[num].right + "%";
+  img.style.bottom = data[num].bottom + "%";
+  img.style.width = data[num].width + "vmin";
+  img.style.height = data[num].height;
+  img.style.margin = "auto";
+  img.style.position = "fixed";
+}
+
 function load() {
+  common.unloadAllStyleSheets();
   common.loadStyleSheet("../assets/main-style.css");
-  defaultbgm = new Audio(`../assets/bgm.m4a`);
-  bgm = defaultbgm;
+  bgm = new Audio(`../assets/bgm.m4a`);
   bgm.loop = true;
   bgm.play();
   document.getElementsByClassName("exit")[0].style.display = "inline-block";
@@ -89,22 +184,11 @@ function load() {
   };
   let next_hat = document.getElementById("next_hat");
   next_hat.onclick = function () {
-    let character = localStorage.getItem("character");
     common.playSound(`../assets/select.wav`);
     money = hat * 100;
     hat++;
     if (hat > totalhats) hat = 0;
-    let img = document.getElementById("hat")
-    img.src = `../assets/hats/${character}/hat_${hat}.avif`;
-    //Load settings from data object.
-    img.style.top = hatsdata[hat].top + "%";
-    img.style.left = hatsdata[hat].left + "%";
-    img.style.right = hatsdata[hat].right + "%";
-    img.style.bottom = hatsdata[hat].bottom + "%";
-    img.style.width = hatsdata[hat].width + "vmin";
-    img.style.height = hatsdata[hat].height;
-    img.style.margin = "auto";
-    img.style.position = "fixed";
+    loadItem("hat");
   };
   next_hat.onmouseover = function () {
     common.playSound(`../assets/hover.wav`);
@@ -115,22 +199,11 @@ function load() {
   };
   let prev_hat = document.getElementById("prev_hat");
   prev_hat.onclick = function () {
-    let character = localStorage.getItem("character");
     common.playSound(`../assets/select.wav`);
     money = hat * 100;
     hat--;
     if (hat < 0) hat = totalhats;
-    let img = document.getElementById("hat")
-    img.src = `../assets/hats/${character}/hat_${hat}.avif`;
-    //Load settings from data object.
-    img.style.top = hatsdata[hat].top + "%";
-    img.style.left = hatsdata[hat].left + "%";
-    img.style.right = hatsdata[hat].right + "%";
-    img.style.bottom = hatsdata[hat].bottom + "%";
-    img.style.width = hatsdata[hat].width + "vmin";
-    img.style.height = hatsdata[hat].height;
-    img.style.margin = "auto";
-    img.style.position = "fixed";
+    loadItem("hat");
   };
   prev_hat.onmouseover = function () {
     common.playSound(`../assets/hover.wav`);
@@ -141,24 +214,13 @@ function load() {
   };
   let next_upper = document.getElementById("next_upper");
   next_upper.onclick = function () {
-    let character = localStorage.getItem("character");
     common.playSound(`../assets/select.wav`);
     money = upper * 100;
-     upper++;
-     if (upper > totaluppers) upper = 0;
-    let img = document.getElementById("upper")
-    img.src = `../assets/uppers/${character}/upper_${upper}.avif`;
-    //Load settings from data object.
-    img.style.top = upperdata[upper].top + "%";
-    img.style.left = upperdata[upper].left + "%";
-    img.style.right = upperdata[upper].right + "%";
-    img.style.bottom = upperdata[upper].bottom + "%";
-    img.style.width = upperdata[upper].width + "vmin";
-    img.style.height = upperdata[upper].height;
-    img.style.margin = "auto";
-    img.style.position = "fixed";
+    upper++;
+    if (upper > totaluppers) upper = 0;
+    loadItem("upper");
     if (upperdata[upper].conflict === true) lowersdiv.style.display = "none";
-    else lowersdiv.style.display = "block"
+    else lowersdiv.style.display = "block";
   };
   next_upper.onmouseover = function () {
     common.playSound(`../assets/hover.wav`);
@@ -169,24 +231,13 @@ function load() {
   };
   let prev_upper = document.getElementById("prev_upper");
   prev_upper.onclick = function () {
-    let character = localStorage.getItem("character");
     common.playSound(`../assets/select.wav`);
     money = upper * 100;
     upper--;
     if (upper < 0) upper = totaluppers;
-    let img = document.getElementById("upper")
-    img.src = `../assets/uppers/${character}/upper_${upper}.avif`;
-    //Load settings from data object.
-    img.style.top = upperdata[upper].top + "%";
-    img.style.left = upperdata[upper].left + "%";
-    img.style.right = upperdata[upper].right + "%";
-    img.style.bottom = upperdata[upper].bottom + "%";
-    img.style.width = upperdata[upper].width + "vmin";
-    img.style.height = upperdata[upper].height;
-    img.style.margin = "auto";
-    img.style.position = "fixed";
+    loadItem("upper");
     if (upperdata[upper].conflict === true) lowersdiv.style.display = "none";
-    else lowersdiv.style.display = "block"
+    else lowersdiv.style.display = "block";
   };
   prev_upper.onmouseover = function () {
     common.playSound(`../assets/hover.wav`);
@@ -197,22 +248,11 @@ function load() {
   };
   let next_lower = document.getElementById("next_lower");
   next_lower.onclick = function () {
-    let character = localStorage.getItem("character");
     common.playSound(`../assets/select.wav`);
     money = lower * 100;
     lower++;
     if (lower > totallowers) lower = 0;
-    let img = document.getElementById("lower")
-    img.src = `../assets/lowers/${character}/lower_${lower}.avif`;
-    //Load settings from data object.
-    img.style.top = lowerdata[lower].top + "%";
-    img.style.left = lowerdata[lower].left + "%";
-    img.style.right = lowerdata[lower].right + "%";
-    img.style.bottom = lowerdata[lower].bottom + "%";
-    img.style.width = lowerdata[lower].width + "vmin";
-    img.style.height = lowerdata[lower].height;
-    img.style.margin = "auto";
-    img.style.position = "fixed";
+    loadItem("lower");
   };
   next_lower.onmouseover = function () {
     common.playSound(`../assets/hover.wav`);
@@ -223,22 +263,11 @@ function load() {
   };
   let prev_lower = document.getElementById("prev_lower");
   prev_lower.onclick = function () {
-    let character = localStorage.getItem("character");
     common.playSound(`../assets/select.wav`);
     money = lower * 100;
     lower--;
-    if  (lower < 0) lower = totallowers;
-    let img = document.getElementById("lower")
-    img.src = `../assets/lowers/${character}/lower_${lower}.avif`;
-    //Load settings from data object.
-    img.style.top = lowerdata[lower].top + "%";
-    img.style.left = lowerdata[lower].left + "%";
-    img.style.right = lowerdata[lower].right + "%";
-    img.style.bottom = lowerdata[lower].bottom + "%";
-    img.style.width = lowerdata[lower].width + "vmin";
-    img.style.height = lowerdata[lower].height;
-    img.style.margin = "auto";
-    img.style.position = "fixed";
+    if (lower < 0) lower = totallowers;
+    loadItem("lower");
   };
   prev_lower.onmouseover = function () {
     common.playSound(`../assets/hover.wav`);
@@ -249,22 +278,11 @@ function load() {
   };
   let next_shoe = document.getElementById("next_shoe");
   next_shoe.onclick = function () {
-    let character = localStorage.getItem("character");
     common.playSound(`../assets/select.wav`);
     money = shoes * 100;
     shoes++;
     if (shoes > totalshoes) shoes = 0;
-    let img = document.getElementById("shoe")
-    img.src = `../assets/shoes/${character}/shoe_${shoes}.avif`;
-    //Load settings from data object.
-    img.style.top = shoesdata[shoes].top + "%";
-    img.style.left = shoesdata[shoes].left + "%";
-    img.style.right = shoesdata[shoes].right + "%";
-    img.style.bottom = shoesdata[shoes].bottom + "%";
-    img.style.width = shoesdata[shoes].width + "vmin";
-    img.style.height = shoesdata[shoes].height;
-    img.style.margin = "auto";
-    img.style.position = "fixed";
+    loadItem("shoe");
   };
   next_shoe.onmouseover = function () {
     common.playSound(`../assets/hover.wav`);
@@ -275,22 +293,11 @@ function load() {
   };
   let prev_shoe = document.getElementById("prev_shoe");
   prev_shoe.onclick = function () {
-    let character = localStorage.getItem("character");
     common.playSound(`../assets/select.wav`);
     money = shoes * 100;
     shoes--;
     if (shoes < 0) shoes = totalshoes;
-    let img = document.getElementById("lower")
-    img.src = `../assets/shoes/${character}/lower_${shoes}.avif`;
-    //Load settings from data object.
-    img.style.top = shoesdata[shoes].top + "%";
-    img.style.left = shoesdata[shoes].left + "%";
-    img.style.right = shoesdata[shoes].right + "%";
-    img.style.bottom = shoesdata[shoes].bottom + "%";
-    img.style.width = shoesdata[shoes].width + "vmin";
-    img.style.height = shoesdata[shoes].height;
-    img.style.margin = "auto";
-    img.style.position = "fixed";
+    loadItem("shoe");
   };
   prev_shoe.onmouseover = function () {
     common.playSound(`../assets/hover.wav`);
@@ -306,33 +313,6 @@ function load() {
     "3",
     "YesNo"
   );
-}
-
-function fetchData(character) {
-  fetch(`../assets/hats/${character}/hats.json`)
-    .then((response) => response.json())
-    .then((json) => {
-      console.log(json);
-      hatsdata = json;
-    });
-  fetch(`../assets/uppers/${character}/uppers.json`)
-    .then((response) => response.json())
-    .then((json) => {
-      console.log(json);
-      upperdata = json;
-    });
-  fetch(`../assets/lowers/${character}/lowers.json`)
-    .then((response) => response.json())
-    .then((json) => {
-      console.log(json);
-      lowerdata = json;
-    });
-  fetch(`../assets/shoes/${character}/shoes.json`)
-    .then((response) => response.json())
-    .then((json) => {
-      console.log(json);
-      shoesdata = json;
-    });
 }
 
 function spawnTextBox(cardasset, scale, text, fontSize, buttontype) {
@@ -371,7 +351,7 @@ function spawnTextBox(cardasset, scale, text, fontSize, buttontype) {
       OKButton.style.zIndex = "99";
       OKButton.onclick = function () {
         common.playSound(`../assets/select.wav`);
-        closeTextBox();
+        common.closeTextBox();
       };
       OKButton.onmouseover = function () {
         common.playSound(`../assets/hover.wav`);
@@ -399,7 +379,7 @@ function spawnTextBox(cardasset, scale, text, fontSize, buttontype) {
         document.getElementById("lowers").style.display = "block";
         document.getElementById("shoes").style.display = "block";
         fetchData("girl");
-        closeTextBox();
+        common.closeTextBox();
       };
       YesButton.onmouseover = function () {
         document.getElementById("girl").style.display = "block";
@@ -421,7 +401,7 @@ function spawnTextBox(cardasset, scale, text, fontSize, buttontype) {
         document.getElementById("lowers").style.display = "block";
         document.getElementById("shoes").style.display = "block";
         fetchData("boy");
-        closeTextBox();
+        common.closeTextBox();
       };
       NoButton.onmouseover = function () {
         document.getElementById("boy").style.display = "block";
@@ -436,26 +416,4 @@ function spawnTextBox(cardasset, scale, text, fontSize, buttontype) {
   }
 }
 
-function closeTextBox() {
-  const cover = common.getElement("cover");
-  const card = common.getElement("textcard");
-  const cardtext = common.getElement("cardtext");
-  const imagetext = common.getElement("imagetext");
-  const OKButton = common.getElement("OK");
-  const YesButton = common.getElement("Yes");
-  const NOButton = common.getElement("No");
-  const PlayAgain = common.getElement("PlayAgain");
-  const cardimage = common.getElement("cardimage");
-  if (cover) cover.remove();
-  if (card) card.remove();
-  if (cardtext) cardtext.remove();
-  if (imagetext) imagetext.remove();
-  if (OKButton) OKButton.remove();
-  if (YesButton) YesButton.remove();
-  if (NOButton) NOButton.remove();
-  if (PlayAgain) PlayAgain.remove();
-  if (cardimage) cardimage.remove();
-  if (bgm.paused === true || bgm !== defaultbgm) setDefaultMusic();
-}
-
-load();
+loadAssets();

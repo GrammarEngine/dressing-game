@@ -226,3 +226,24 @@ export function audioFadeOut(sound, fadeDuration) {
     }
   }, 200);
 }
+
+export function closeTextBox() {
+  const cover = getElement("cover");
+  const card = getElement("textcard");
+  const cardtext = getElement("cardtext");
+  const imagetext = getElement("imagetext");
+  const OKButton = getElement("OK");
+  const YesButton = getElement("Yes");
+  const NOButton = getElement("No");
+  const PlayAgain = getElement("PlayAgain");
+  const cardimage = getElement("cardimage");
+  if (cover) cover.remove();
+  if (card) card.remove();
+  if (cardtext) cardtext.remove();
+  if (imagetext) imagetext.remove();
+  if (OKButton) OKButton.remove();
+  if (YesButton) YesButton.remove();
+  if (NOButton) NOButton.remove();
+  if (PlayAgain) PlayAgain.remove();
+  if (cardimage) cardimage.remove();
+}
