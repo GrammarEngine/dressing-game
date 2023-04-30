@@ -1,0 +1,90 @@
+{
+    "0": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": "auto"
+    },
+    "1": {
+        "left": 0,
+        "right": 0.5,
+        "top": 32.5,
+        "bottom": 0,
+        "width": 21.2,
+        "height": "auto"
+    },
+    "2": {
+        "left": 0,
+        "right": 1,
+        "top": 32.5,
+        "bottom": 0,
+        "width": 21.2,
+        "height": "auto"
+    },
+    "3": {
+        "left": 0,
+        "right": 0.5,
+        "top": 36,
+        "bottom": 0,
+        "width": 15.5,
+        "height": "22vmin"
+    },
+    "4": {
+        "left": 0,
+        "right": 0.5,
+        "top": 33,
+        "bottom": 0,
+        "width": 17,
+        "height": "22vmin"
+    },
+    "5": {
+        "left": 0,
+        "right": 1,
+        "top": 35,
+        "bottom": 0,
+        "width": 15.5,
+        "height": "22vmin"
+    },
+    "6": {
+        "left": 0,
+        "right": 0.5,
+        "top": 33,
+        "bottom": 0,
+        "width": 17,
+        "height": "22vmin"
+    },
+    "7": {
+        "left": 0,
+        "right": 1,
+        "top": 31.5,
+        "bottom": 0,
+        "width": 23,
+        "height": "auto"
+    },
+    "8": {
+        "left": 0,
+        "right": 1,
+        "top": 45,
+        "bottom": 0,
+        "width": 15.7,
+        "height": "32.1vmin"
+    },
+    "9": {
+        "left": 0,
+        "right": 1,
+        "top": 45,
+        "bottom": 0,
+        "width": 15.7,
+        "height": "32.1vmin"
+    },
+    "10": {
+        "left": 0,
+        "right": 1,
+        "top": 45,
+        "bottom": 0,
+        "width": 15.7,
+        "height": "32.1vmin"
+    }
+}

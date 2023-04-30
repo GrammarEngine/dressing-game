@@ -1,0 +1,130 @@
+{
+    "0": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": "auto"
+    },
+    "1": {
+        "left": 0.5,
+        "right": 0,
+        "top": 0,
+        "bottom": 50,
+        "width": 21,
+        "height": "auto"
+    },
+    "2": {
+        "left": 0,
+        "right": 2,
+        "top": 0,
+        "bottom": 55,
+        "width": 21,
+        "height": "auto"
+    },
+    "3": {
+        "left": 0,
+        "right": 2,
+        "top": 0,
+        "bottom": 55,
+        "width": 21,
+        "height": "auto"
+    },
+    "4": {
+        "left": 0,
+        "right": 0.5,
+        "top": 0,
+        "bottom": 60,
+        "width": 21,
+        "height": "auto"
+    },
+    "5": {
+        "left": 2,
+        "right": 0,
+        "top": 0,
+        "bottom": 50,
+        "width": 25,
+        "height": "auto"
+    },
+    "6": {
+        "left": 2,
+        "right": 0,
+        "top": 0,
+        "bottom": 52,
+        "width": 25,
+        "height": "auto"
+    },
+    "7": {
+        "left": 0,
+        "right": 0.5,
+        "top": 0,
+        "bottom": 65,
+        "width": 22,
+        "height": "auto"
+    },
+    "8": {
+        "left": 0,
+        "right": 0.5,
+        "top": 0,
+        "bottom": 65,
+        "width": 22,
+        "height": "auto"
+    },
+    "9": {
+        "left": 1,
+        "right": 0,
+        "top": 0,
+        "bottom": 50,
+        "width": 21,
+        "height": "auto"
+    },
+    "10": {
+        "left": 0,
+        "right": 1,
+        "top": 0,
+        "bottom": 55,
+        "width": 30,
+        "height": "auto"
+    },
+    "11": {
+        "left": 0,
+        "right": 1,
+        "top": 0,
+        "bottom": 50,
+        "width": 21,
+        "height": "auto"
+    },
+    "12": {
+        "left": 0,
+        "right": 2,
+        "top": 0,
+        "bottom": 50,
+        "width": 21,
+        "height": "auto"
+    },
+    "13": {
+        "left": 0,
+        "right": 0.5,
+        "top": 0,
+        "bottom": 55,
+        "width": 21,
+        "height": "auto"
+    },
+    "14": {
+        "left": 2,
+        "right": 0,
+        "top": 0,
+        "bottom": 50,
+        "width": 21,
+        "height": "auto"
+    },
+    "15": {
+        "left": 0,
+        "right": 0.5,
+        "top": 0,
+        "bottom": 55,
+        "width": 30,
+        "height": "auto"
+    }
+}
