@@ -121,9 +121,9 @@
     },
     "15": {
         "left": 0,
-        "right": 0.5,
+        "right": 1,
         "top": 0,
-        "bottom": 55,
+        "bottom": 52,
         "width": 25,
         "height": "auto"
     }

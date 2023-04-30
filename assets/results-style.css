@@ -101,7 +101,7 @@ button.playagain {
   display: block;
   margin: auto;
   align-self: center;
-  width: auto;
+  width: 19vmin;
   height: 7vmin;
   font-size: 4vmin;
   text-align: center;
@@ -118,7 +118,7 @@ button.exitbutton {
   display: block;
   margin: auto;
   align-self: center;
-  width: auto;
+  width: 19vmin;
   height: 7vmin;
   font-size: 4vmin;
   text-align: center;
