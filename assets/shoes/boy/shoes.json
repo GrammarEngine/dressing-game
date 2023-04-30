@@ -9,10 +9,10 @@
     },
     "1": {
         "left": 0,
-        "right": 1,
-        "top": 85,
+        "right": 0.9,
+        "top": 80,
         "bottom": 0,
-        "width": 22,
+        "width": 25,
         "height": "auto"
     }
 }
