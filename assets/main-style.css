@@ -213,8 +213,12 @@ div.shoes {
 button.previous {
   float: left;
   display: none;
+  font-size: 2vmin;
+  border-radius: 2vmin;
 }
 button.next {
   float: right;
   display: none;
+  font-size: 2vmin;
+  border-radius: 2vmin;
 }
