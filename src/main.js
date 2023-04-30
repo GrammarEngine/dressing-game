@@ -37,25 +37,21 @@ function fetchData(character) {
   fetch(`../assets/hats/${character}/hats.json`)
     .then((response) => response.json())
     .then((json) => {
-      console.log(json);
       hatsdata = json;
     });
   fetch(`../assets/uppers/${character}/uppers.json`)
     .then((response) => response.json())
     .then((json) => {
-      console.log(json);
       upperdata = json;
     });
   fetch(`../assets/lowers/${character}/lowers.json`)
     .then((response) => response.json())
     .then((json) => {
-      console.log(json);
       lowerdata = json;
     });
   fetch(`../assets/shoes/${character}/shoes.json`)
     .then((response) => response.json())
     .then((json) => {
-      console.log(json);
       shoesdata = json;
     });
 }
@@ -64,11 +60,9 @@ async function fetchFiles(folder) {
   await fetch(`${folder}/files.json`)
     .then((response) => response.json())
     .then((json) => {
-      console.log(json);
       json.files.forEach((file) => {
         content.push(folder + file);
       });
-      console.log(content);
     });
 }
 
@@ -134,19 +128,22 @@ function loadItem(item) {
     }
   }
   img.src = `../assets/${item}s/${character}/${item}_${num}.avif`;
-  img.style.top = data[num].top + "%";
-  img.style.left = data[num].left + "%";
-  img.style.right = data[num].right + "%";
-  img.style.bottom = data[num].bottom + "%";
-  img.style.width = data[num].width + "vmin";
-  img.style.height = data[num].height;
-  img.style.margin = "auto";
-  img.style.position = "fixed";
+  //Only set the rest of the settings once the src is fully applied.
+  img.onload = function () {
+    console.log("Loaded!");
+    img.style.top = data[num].top + "%";
+    img.style.left = data[num].left + "%";
+    img.style.right = data[num].right + "%";
+    img.style.bottom = data[num].bottom + "%";
+    img.style.width = data[num].width + "vmin";
+    img.style.height = data[num].height;
+    img.style.margin = "auto";
+    img.style.position = "fixed";
+  };
 }
 
 function setHover() {
   buttons.forEach((button) => {
-    console.log(button);
     let btn = common.getElement(button);
     btn.onmouseover = function () {
       common.playSound(`../assets/hover.wav`);
