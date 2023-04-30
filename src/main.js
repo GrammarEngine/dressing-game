@@ -46,29 +46,58 @@ function fetchData(character) {
     });
 }
 
-async function loadAssets() {
-  fetch("../assets/files.json")
-    .then((response) => response.json())
-    .then((json) => {
-      console.log(json);
-      json.files.forEach((file) => {
-        content.push("../assets/" + file);
-      });
-      var preload = new createjs.LoadQueue(true);
-      //This will trigger once as soon as the page is loaded.
-      let count = 0;
-      preload.loadManifest(content);
-      preload.setMaxConnections(60);
-      preload.on(
-        "fileload",
-        function () {
-          count++;
-          console.log("Files loaded: " + count);
-        },
-        this
-      );
-      preload.on("complete", load, this);
+async function fetchFiles(folder) {
+  await fetch(`${folder}/files.json`)
+  .then((response) => response.json())
+  .then((json) => {
+    console.log(json);
+    json.files.forEach((file) => {
+      content.push(folder + file);
     });
+    console.log(content);
+});
+}
+
+async function loadAssets() {
+    //Folder structure:
+    
+    //assets/
+    //assets/hats/boy/
+    //assets/hats/girl/
+    //assets/uppers/boy/
+    //assets/uppers/girl/
+    //assets/lowers/boy/
+    //assets/lowers/girl/
+    //assets/shoes/boy/
+    //assets/shoes/girl/
+
+    //Each of these folders has a json file with the data.
+    //First fetch all the folders, THEN start preloading.
+    await fetchFiles("../assets/");
+    await fetchFiles("../assets/hats/boy/");
+    await fetchFiles("../assets/hats/girl/");
+    await fetchFiles("../assets/uppers/boy/");
+    await fetchFiles("../assets/uppers/girl/");
+    await fetchFiles("../assets/lowers/boy/");
+    await fetchFiles("../assets/lowers/girl/");
+    await fetchFiles("../assets/shoes/boy/");
+    await fetchFiles("../assets/shoes/girl/");
+    console.log("Loading files...")
+    var preload = new createjs.LoadQueue(true);
+    //This will trigger once as soon as the page is loaded.
+    let count = 0;
+    preload.loadManifest(content);
+    preload.setMaxConnections(60);
+    preload.on(
+      "fileload",
+      function () {
+        count++;
+        console.log("Files loaded: " + count);
+      },
+      this
+    );
+    preload.on("complete", load, this);
+    console.log("Done!");    
 }
 
 function loadItem(item) {
@@ -114,6 +143,7 @@ function loadItem(item) {
 }
 
 function load() {
+  document.getElementById("loading").style.display = "none";
   common.unloadAllStyleSheets();
   common.loadStyleSheet("../assets/main-style.css");
   bgm = new Audio(`../assets/bgm.m4a`);
