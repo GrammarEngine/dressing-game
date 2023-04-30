@@ -2,8 +2,6 @@ import * as common from "./common-scripts.js";
 
 let bgm = undefined;
 
-let money = 0;
-
 let hat = 0;
 let upper = 0;
 let lower = 0;
@@ -126,16 +124,18 @@ function load() {
   const menu = common.getElement("exit");
   menu.onclick = function () {
     common.playSound(`../assets/select.wav`);
-    if (money === 0)
+    //If only upper, or only lower, or nether upper or lower was selected, then don't go out.
+    if (
+      (upper === 0 && lower !== 0) || (upper !== 0 && lower === 0 && upperdata[upper].conflict === false)
+    ) {
       spawnTextBox(
         "../assets/card.avif",
         "2",
-        "\n\n\nPlease stay in our shop for a bit!",
+        "\n\n\nYou can't go out like this!",
         "3",
         "OK"
       );
-    else {
-      localStorage.setItem("money", money);
+    } else {
       common.goToScreen("results.html");
     }
   };
@@ -185,7 +185,6 @@ function load() {
   let next_hat = document.getElementById("next_hat");
   next_hat.onclick = function () {
     common.playSound(`../assets/select.wav`);
-    money = hat * 100;
     hat++;
     if (hat > totalhats) hat = 0;
     loadItem("hat");
@@ -200,7 +199,6 @@ function load() {
   let prev_hat = document.getElementById("prev_hat");
   prev_hat.onclick = function () {
     common.playSound(`../assets/select.wav`);
-    money = hat * 100;
     hat--;
     if (hat < 0) hat = totalhats;
     loadItem("hat");
@@ -215,7 +213,6 @@ function load() {
   let next_upper = document.getElementById("next_upper");
   next_upper.onclick = function () {
     common.playSound(`../assets/select.wav`);
-    money = upper * 100;
     upper++;
     if (upper > totaluppers) upper = 0;
     loadItem("upper");
@@ -232,7 +229,6 @@ function load() {
   let prev_upper = document.getElementById("prev_upper");
   prev_upper.onclick = function () {
     common.playSound(`../assets/select.wav`);
-    money = upper * 100;
     upper--;
     if (upper < 0) upper = totaluppers;
     loadItem("upper");
@@ -249,7 +245,6 @@ function load() {
   let next_lower = document.getElementById("next_lower");
   next_lower.onclick = function () {
     common.playSound(`../assets/select.wav`);
-    money = lower * 100;
     lower++;
     if (lower > totallowers) lower = 0;
     loadItem("lower");
@@ -264,7 +259,6 @@ function load() {
   let prev_lower = document.getElementById("prev_lower");
   prev_lower.onclick = function () {
     common.playSound(`../assets/select.wav`);
-    money = lower * 100;
     lower--;
     if (lower < 0) lower = totallowers;
     loadItem("lower");
@@ -279,7 +273,6 @@ function load() {
   let next_shoe = document.getElementById("next_shoe");
   next_shoe.onclick = function () {
     common.playSound(`../assets/select.wav`);
-    money = shoes * 100;
     shoes++;
     if (shoes > totalshoes) shoes = 0;
     loadItem("shoe");
@@ -294,7 +287,6 @@ function load() {
   let prev_shoe = document.getElementById("prev_shoe");
   prev_shoe.onclick = function () {
     common.playSound(`../assets/select.wav`);
-    money = shoes * 100;
     shoes--;
     if (shoes < 0) shoes = totalshoes;
     loadItem("shoe");
