@@ -19,6 +19,9 @@ let shoesdata = undefined;
 
 let content = [];
 
+let buttons = ["exit", "next_hat", "prev_hat", "next_upper", "prev_upper", "next_lower", "prev_lower", "next_shoe", "prev_shoe"];
+
+
 function fetchData(character) {
   fetch(`../assets/hats/${character}/hats.json`)
     .then((response) => response.json())
@@ -59,20 +62,6 @@ async function fetchFiles(folder) {
 }
 
 async function loadAssets() {
-    //Folder structure:
-    
-    //assets/
-    //assets/hats/boy/
-    //assets/hats/girl/
-    //assets/uppers/boy/
-    //assets/uppers/girl/
-    //assets/lowers/boy/
-    //assets/lowers/girl/
-    //assets/shoes/boy/
-    //assets/shoes/girl/
-
-    //Each of these folders has a json file with the data.
-    //First fetch all the folders, THEN start preloading.
     await fetchFiles("../assets/");
     await fetchFiles("../assets/hats/boy/");
     await fetchFiles("../assets/hats/girl/");
@@ -131,7 +120,6 @@ function loadItem(item) {
     }
   }
   img.src = `../assets/${item}s/${character}/${item}_${num}.avif`;
-  //Load settings from data object.
   img.style.top = data[num].top + "%";
   img.style.left = data[num].left + "%";
   img.style.right = data[num].right + "%";
@@ -140,6 +128,20 @@ function loadItem(item) {
   img.style.height = data[num].height;
   img.style.margin = "auto";
   img.style.position = "fixed";
+}
+
+function setHover() {
+  buttons.forEach((button) => {
+    console.log(button);
+    let btn = common.getElement(button);
+    btn.onmouseover = function () {
+      common.playSound(`../assets/hover.wav`);
+      btn.style.backgroundColor = "red";
+    };
+    btn.onmouseout = function () {
+      btn.style.backgroundColor = "blueviolet";
+    };
+  })
 }
 
 function load() {
@@ -156,7 +158,7 @@ function load() {
     common.playSound(`../assets/select.wav`);
     //If only upper, or only lower, or nether upper or lower was selected, then don't go out.
     if (
-      (upper === 0 && lower !== 0) || (upper !== 0 && lower === 0 && upperdata[upper].conflict === false)
+      (upper === 0 && lower === 0) || (upper === 0 && lower !== 0) || (upper !== 0 && lower === 0 && upperdata[upper].conflict === false)
     ) {
       spawnTextBox(
         "../assets/card.avif",
@@ -169,13 +171,7 @@ function load() {
       common.goToScreen("results.html");
     }
   };
-  menu.onmouseover = function () {
-    common.playSound(`../assets/hover.wav`);
-    menu.style.backgroundColor = "red";
-  };
-  menu.onmouseout = function () {
-    menu.style.backgroundColor = "blueviolet";
-  };
+  setHover();
   let hatsdiv = document.getElementById("hats");
   let uppersdiv = document.getElementById("uppers");
   let lowersdiv = document.getElementById("lowers");
@@ -219,26 +215,12 @@ function load() {
     if (hat > totalhats) hat = 0;
     loadItem("hat");
   };
-  next_hat.onmouseover = function () {
-    common.playSound(`../assets/hover.wav`);
-    next_hat.style.backgroundColor = "red";
-  };
-  next_hat.onmouseout = function () {
-    next_hat.style.backgroundColor = "blueviolet";
-  };
   let prev_hat = document.getElementById("prev_hat");
   prev_hat.onclick = function () {
     common.playSound(`../assets/select.wav`);
     hat--;
     if (hat < 0) hat = totalhats;
     loadItem("hat");
-  };
-  prev_hat.onmouseover = function () {
-    common.playSound(`../assets/hover.wav`);
-    prev_hat.style.backgroundColor = "red";
-  };
-  prev_hat.onmouseout = function () {
-    prev_hat.style.backgroundColor = "blueviolet";
   };
   let next_upper = document.getElementById("next_upper");
   next_upper.onclick = function () {
@@ -249,13 +231,6 @@ function load() {
     if (upperdata[upper].conflict === true) lowersdiv.style.display = "none";
     else lowersdiv.style.display = "block";
   };
-  next_upper.onmouseover = function () {
-    common.playSound(`../assets/hover.wav`);
-    next_upper.style.backgroundColor = "red";
-  };
-  next_upper.onmouseout = function () {
-    next_upper.style.backgroundColor = "blueviolet";
-  };
   let prev_upper = document.getElementById("prev_upper");
   prev_upper.onclick = function () {
     common.playSound(`../assets/select.wav`);
@@ -265,26 +240,12 @@ function load() {
     if (upperdata[upper].conflict === true) lowersdiv.style.display = "none";
     else lowersdiv.style.display = "block";
   };
-  prev_upper.onmouseover = function () {
-    common.playSound(`../assets/hover.wav`);
-    prev_upper.style.backgroundColor = "red";
-  };
-  prev_upper.onmouseout = function () {
-    prev_upper.style.backgroundColor = "blueviolet";
-  };
   let next_lower = document.getElementById("next_lower");
   next_lower.onclick = function () {
     common.playSound(`../assets/select.wav`);
     lower++;
     if (lower > totallowers) lower = 0;
     loadItem("lower");
-  };
-  next_lower.onmouseover = function () {
-    common.playSound(`../assets/hover.wav`);
-    next_lower.style.backgroundColor = "red";
-  };
-  next_lower.onmouseout = function () {
-    next_lower.style.backgroundColor = "blueviolet";
   };
   let prev_lower = document.getElementById("prev_lower");
   prev_lower.onclick = function () {
@@ -293,13 +254,6 @@ function load() {
     if (lower < 0) lower = totallowers;
     loadItem("lower");
   };
-  prev_lower.onmouseover = function () {
-    common.playSound(`../assets/hover.wav`);
-    prev_lower.style.backgroundColor = "red";
-  };
-  prev_lower.onmouseout = function () {
-    prev_lower.style.backgroundColor = "blueviolet";
-  };
   let next_shoe = document.getElementById("next_shoe");
   next_shoe.onclick = function () {
     common.playSound(`../assets/select.wav`);
@@ -307,26 +261,12 @@ function load() {
     if (shoes > totalshoes) shoes = 0;
     loadItem("shoe");
   };
-  next_shoe.onmouseover = function () {
-    common.playSound(`../assets/hover.wav`);
-    next_shoe.style.backgroundColor = "red";
-  };
-  next_shoe.onmouseout = function () {
-    next_shoe.style.backgroundColor = "blueviolet";
-  };
   let prev_shoe = document.getElementById("prev_shoe");
   prev_shoe.onclick = function () {
     common.playSound(`../assets/select.wav`);
     shoes--;
     if (shoes < 0) shoes = totalshoes;
     loadItem("shoe");
-  };
-  prev_shoe.onmouseover = function () {
-    common.playSound(`../assets/hover.wav`);
-    prev_shoe.style.backgroundColor = "red";
-  };
-  prev_shoe.onmouseout = function () {
-    prev_shoe.style.backgroundColor = "blueviolet";
   };
   spawnTextBox(
     "../assets/card.avif",
