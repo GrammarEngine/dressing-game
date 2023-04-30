@@ -301,8 +301,8 @@ function load() {
   spawnTextBox(
     "../assets/card.avif",
     "2",
-    "\n\n\nWelcome to the shop!\nWho would you like to dress?",
-    "3",
+    "\n\n\nWelcome!\nFeel free to choose any clothes you like!\nWho are you?",
+    "2.5",
     "YesNo"
   );
 }
