@@ -1,9 +1,7 @@
 import * as common from "./common-scripts.js";
 
 function load() {
-  common.loadStyleSheet(
-    `../assets/menu-style.css`
-  );
+  common.loadStyleSheet(`../assets/menu-style.css`);
   const startButton = common.getElement("startbutton");
   const exitButton = common.getElement("exitbutton");
   startButton.onclick = function () {
@@ -21,14 +19,14 @@ function load() {
   };
   startButton.onmouseout = function () {
     startButton.style.backgroundColor = "blueviolet";
-  }
+  };
   exitButton.onmouseover = function () {
     common.playSound(`../assets/hover.wav`);
     exitButton.style.backgroundColor = "red";
   };
   exitButton.onmouseout = function () {
     exitButton.style.backgroundColor = "blueviolet";
-  }
+  };
   common.playMusic(`../assets/menu_bgm.m4a`, true);
 }
 

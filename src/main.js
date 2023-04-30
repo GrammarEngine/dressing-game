@@ -19,7 +19,17 @@ let shoesdata = undefined;
 
 let content = [];
 
-let buttons = ["exit", "next_hat", "prev_hat", "next_upper", "prev_upper", "next_lower", "prev_lower", "next_shoe", "prev_shoe"];
+let buttons = [
+  "exit",
+  "next_hat",
+  "prev_hat",
+  "next_upper",
+  "prev_upper",
+  "next_lower",
+  "prev_lower",
+  "next_shoe",
+  "prev_shoe",
+];
 
 let divs = ["hats", "uppers", "lowers", "shoes"];
 
@@ -52,42 +62,42 @@ function fetchData(character) {
 
 async function fetchFiles(folder) {
   await fetch(`${folder}/files.json`)
-  .then((response) => response.json())
-  .then((json) => {
-    console.log(json);
-    json.files.forEach((file) => {
-      content.push(folder + file);
+    .then((response) => response.json())
+    .then((json) => {
+      console.log(json);
+      json.files.forEach((file) => {
+        content.push(folder + file);
+      });
+      console.log(content);
     });
-    console.log(content);
-});
 }
 
 async function loadAssets() {
-    await fetchFiles("../assets/");
-    await fetchFiles("../assets/hats/boy/");
-    await fetchFiles("../assets/hats/girl/");
-    await fetchFiles("../assets/uppers/boy/");
-    await fetchFiles("../assets/uppers/girl/");
-    await fetchFiles("../assets/lowers/boy/");
-    await fetchFiles("../assets/lowers/girl/");
-    await fetchFiles("../assets/shoes/boy/");
-    await fetchFiles("../assets/shoes/girl/");
-    console.log("Loading files...")
-    var preload = new createjs.LoadQueue(true);
-    //This will trigger once as soon as the page is loaded.
-    let count = 0;
-    preload.loadManifest(content);
-    preload.setMaxConnections(60);
-    preload.on(
-      "fileload",
-      function () {
-        count++;
-        console.log("Files loaded: " + count);
-      },
-      this
-    );
-    preload.on("complete", load, this);
-    console.log("Done!");    
+  await fetchFiles("../assets/");
+  await fetchFiles("../assets/hats/boy/");
+  await fetchFiles("../assets/hats/girl/");
+  await fetchFiles("../assets/uppers/boy/");
+  await fetchFiles("../assets/uppers/girl/");
+  await fetchFiles("../assets/lowers/boy/");
+  await fetchFiles("../assets/lowers/girl/");
+  await fetchFiles("../assets/shoes/boy/");
+  await fetchFiles("../assets/shoes/girl/");
+  console.log("Loading files...");
+  var preload = new createjs.LoadQueue(true);
+  //This will trigger once as soon as the page is loaded.
+  let count = 0;
+  preload.loadManifest(content);
+  preload.setMaxConnections(60);
+  preload.on(
+    "fileload",
+    function () {
+      count++;
+      console.log("Files loaded: " + count);
+    },
+    this
+  );
+  preload.on("complete", load, this);
+  console.log("Done!");
 }
 
 function loadItem(item) {
@@ -145,7 +155,14 @@ function setHover() {
     btn.onmouseout = function () {
       btn.style.backgroundColor = "blueviolet";
     };
-  })
+  });
+}
+
+function unlockControls() {
+  divs.forEach((div) => {
+    let obj = document.getElementById(div);
+    obj.style.display = "block";
+  });
 }
 
 function setDisplay() {
@@ -161,7 +178,7 @@ function setDisplay() {
       next.style.display = "none";
       prev.style.display = "none";
     };
-  })
+  });
 }
 
 function load() {
@@ -175,7 +192,9 @@ function load() {
   menu.onclick = function () {
     common.playSound(`../assets/select.wav`);
     if (
-      (upper === 0 && lower === 0) || (upper === 0 && lower !== 0) || (upper !== 0 && lower === 0 && upperdata[upper].conflict === false)
+      (upper === 0 && lower === 0) ||
+      (upper === 0 && lower !== 0) ||
+      (upper !== 0 && lower === 0 && upperdata[upper].conflict === false)
     ) {
       spawnTextBox(
         "../assets/card.avif",
@@ -316,10 +335,7 @@ function spawnTextBox(cardasset, scale, text, fontSize, buttontype) {
       YesButton.onclick = function () {
         localStorage.setItem("character", "girl");
         common.playSound(`../assets/select.wav`);
-        document.getElementById("hats").style.display = "block";
-        document.getElementById("uppers").style.display = "block";
-        document.getElementById("lowers").style.display = "block";
-        document.getElementById("shoes").style.display = "block";
+        unlockControls();
         fetchData("girl");
         common.closeTextBox();
       };
@@ -338,10 +354,7 @@ function spawnTextBox(cardasset, scale, text, fontSize, buttontype) {
       NoButton.onclick = function () {
         localStorage.setItem("character", "boy");
         common.playSound(`../assets/select.wav`);
-        document.getElementById("hats").style.display = "block";
-        document.getElementById("uppers").style.display = "block";
-        document.getElementById("lowers").style.display = "block";
-        document.getElementById("shoes").style.display = "block";
+        unlockControls();
         fetchData("boy");
         common.closeTextBox();
       };

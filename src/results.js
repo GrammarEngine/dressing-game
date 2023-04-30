@@ -1,6 +1,6 @@
 import * as common from "./common-scripts.js";
 
-let buttons = ["playagain", "exitbutton"]
+let buttons = ["playagain", "exitbutton"];
 
 function setHover() {
   buttons.forEach((button) => {
@@ -13,7 +13,7 @@ function setHover() {
     btn.onmouseout = function () {
       btn.style.backgroundColor = "blueviolet";
     };
-  })
+  });
 }
 
 function load() {
