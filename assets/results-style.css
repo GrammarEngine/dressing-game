@@ -8,18 +8,102 @@ button {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   position: fixed;
 }
+img.boy {
+  left: 0;
+  right: 0.5%;
+  top: 20%;
+  bottom: 0;
+  margin: auto;
+  align-self: center;
+  height: auto;
+  width: 28.5vmin;
+  z-index: -1;
+  position: fixed;
+  display: none;
+}
+img.girl {
+  left: 0;
+  right: 1.125%;
+  top: 17%;
+  bottom: 0;
+  margin: auto;
+  align-self: center;
+  height: auto;
+  width: 20vmin;
+  z-index: -1;
+  position: fixed;
+  display: none;
+}
+div.hats {
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 50%;
+  display: none;
+  height: 15vmin;
+  width: 50vmin;
+  margin: auto;
+  align-self: center;
+  z-index: 5;
+  position: fixed;
+}
+div.uppers {
+  left: 0;
+  right: 0;
+  top: 20%;
+  bottom: 20%;
+  display: none;
+  height: 15vmin;
+  width: 50vmin;
+  margin: auto;
+  align-self: center;
+  z-index: 5;
+  position: fixed;
+}
+div.lowers {
+  left: 0;
+  right: 0;
+  top: 70%;
+  bottom: 25%;
+  display: none;
+  height: 30vmin;
+  width: 50vmin;
+  margin: auto;
+  align-self: center;
+  z-index: 3;
+  position: fixed;
+}
+div.shoes {
+  left: 0;
+  right: 0;
+  top: 85%;
+  bottom: 0%;
+  display: none;
+  height: 10vmin;
+  width: 50vmin;
+  margin: auto;
+  align-self: center;
+  z-index: 3;
+  position: fixed;
+}
+button.previous {
+  display: none;
+}
+button.next {
+  display: none;
+}
 button.playagain {
   position: fixed;
   left: 0;
-  right: 0%;
-  top: 40%;
+  right: 50%;
+  top: 70%;
   bottom: 0%;
   display: block;
   margin: auto;
   align-self: center;
-  width: 29vmin;
-  height: 9vmin;
-  font-size: 5vmin;
+  width: auto;
+  height: 7vmin;
+  font-size: 4vmin;
   text-align: center;
   color: aliceblue;
   background-color: blueviolet;
@@ -27,16 +111,16 @@ button.playagain {
 }
 button.exitbutton {
   position: fixed;
-  left: 0;
+  left: 50%;
   right: 0%;
-  top: 65%;
+  top: 70%;
   bottom: 0%;
   display: block;
   margin: auto;
   align-self: center;
-  width: 19vmin;
-  height: 9vmin;
-  font-size: 5vmin;
+  width: auto;
+  height: 7vmin;
+  font-size: 4vmin;
   text-align: center;
   color: aliceblue;
   background-color: blueviolet;
@@ -48,8 +132,8 @@ img.logo {
   left: 0;
   right: 0%;
   top: 0%;
-  bottom: 50%;
-  width: 40%;
+  bottom: 80%;
+  width: 20%;
   height: auto;
   display: block;
   margin: auto;

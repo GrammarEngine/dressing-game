@@ -185,6 +185,8 @@ function load() {
         "OK"
       );
     } else {
+      let field = document.getElementById("field").innerHTML;
+      localStorage.setItem("result", field);
       common.goToScreen("results.html");
     }
   };
