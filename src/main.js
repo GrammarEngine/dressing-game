@@ -182,6 +182,10 @@ function load() {
   document.getElementById("loading").style.display = "none";
   common.unloadAllStyleSheets();
   common.loadStyleSheet("../assets/main-style.css");
+  screen.orientation.onchange = function () {
+    let elem = document.documentElement;
+    elem.requestFullscreen("hide");
+  };
   bgm = common.playMusic(`../assets/bgm.m4a`, true);
   document.getElementsByClassName("exit")[0].style.display = "inline-block";
   document.getElementById("field").style.display = "block";
